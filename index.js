@@ -22,10 +22,12 @@ app.get("/", function (req, res) {
 // your first API endpoint... 
 app.get("/api/:date?", function (req, res) {
   // console.log();
-  const isEmpty = !req?.params?.date
+  const param = req?.params?.date
+  const isEmpty = !param
+  const formattedParam = /^\d+$/.test(param) ? parseInt(param) : param
   let date = new Date()
   try {
-    date = isEmpty ? date : new Date(req?.params?.date)
+    date = isEmpty ? date : new Date(formattedParam)
   } catch (error) {
     res.json({error : "Invalid Date"});
   }
